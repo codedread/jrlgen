@@ -1,0 +1,25 @@
+#topBar {
+  border-bottom: solid 1px black;
+}
+
+#readingList {
+  background-color: #eee;
+  border: solid 1px grey;
+  bottom: 0;
+  color: grey;
+  overflow: scroll;
+  position: absolute;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+  width: 300px;
+}
+
+.file {
+  cursor: pointer;
+  user-select: none;
+}
+
+.file:hover {
+  outline: solid 1px grey;
+}
