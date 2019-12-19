@@ -78,7 +78,11 @@ function onReadingListClick(evt) {
   searchbox.focus();
 }
 
-function onKeyUp() {
+function onKeyUp(evt) {
+  // ESC clears the search box.
+  if (evt.keyCode === 27) {
+    searchbox.value = '';
+  }
   populateFullList(searchbox.value);
 }
 
