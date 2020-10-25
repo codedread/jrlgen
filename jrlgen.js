@@ -64,10 +64,17 @@ function onDone() {
   searchbox.focus();
 }
 
+function focusSearchBox() {
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+  searchbox.focus();
+  window.scrollTo(scrollX, scrollY);
+}
+
 function onFullListClick(evt) {
   addBookToList(evt.target.textContent);
   renderCurrentReadingList();
-  searchbox.focus();
+  focusSearchBox();
 }
 
 function onReadingListClick(evt) {
@@ -75,7 +82,7 @@ function onReadingListClick(evt) {
   const index = parseInt(bookDiv.dataset.index, 10);
   currentList.splice(index, 1);
   renderCurrentReadingList();
-  searchbox.focus();
+  focusSearchBox();
 }
 
 function onKeyUp(evt) {
