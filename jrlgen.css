@@ -23,3 +23,7 @@
 .file:hover {
   outline: solid 1px grey;
 }
+
+.file.even {
+  background-color: #ddd;
+}

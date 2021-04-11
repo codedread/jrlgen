@@ -5,7 +5,7 @@ const clearButton = document.querySelector('#clearButton');
 const addAllButton = document.querySelector('#addAllButton');
 const doneButton = document.querySelector('#doneButton');
 
-const READING_ROOT = '/reading/';
+const READING_ROOT = '/data/';
 const DB_FILE = 'all-files.txt';
 let allFiles = [];
 const currentList = [];
@@ -93,11 +93,43 @@ function onKeyUp(evt) {
   populateFullList(searchbox.value);
 }
 
+/**
+ * @param {string} fullPath
+ * @returns {string}
+ */
+function extractFilename(fullPath) {
+  const lastSlash = fullPath.lastIndexOf('/');
+  return fullPath.substring(lastSlash + 1);
+}
+
+/**
+ * @param {string} path1
+ * @param {string} path2
+ * @returns {string}
+ */
+function extractCommonPrefix(path1, path2) {
+  let commonPrefix = '';
+  for (let i = 0; i < path1.length; ++i) {
+    if (i > path2.length) break;
+    if (path2.charAt(i) === path1.charAt(i)) {
+      commonPrefix += path2.charAt(i);
+    } else {
+      break;
+    }
+  }
+  return commonPrefix;
+}
+
+/**
+ * @param {string} query
+ */
 function populateFullList(query = '') {
   fullListDiv.innerHTML = '';
   filteredList = [];
   const fileDivs = [];
   const queryTerms = query.split(' ').map(s => s.toLowerCase());
+  let prevFilename;
+  let even = false;
   for (const file of allFiles) {
     let matched = true;
     let matchedIndex = 0;
@@ -112,9 +144,18 @@ function populateFullList(query = '') {
       continue;
     }
 
+    const thisFilename = extractFilename(file);
+    if (prevFilename) {
+      const prefix = extractCommonPrefix(prevFilename, thisFilename);
+      if (prefix.length < 6) {
+        even = !even;
+      }
+    }
+    prevFilename = thisFilename;
+
     filteredList.push(file);
     const fileDiv = document.createElement('div');
-    fileDiv.className = 'file';
+    fileDiv.classList.add('file', even ? 'even' : 'odd');
     fileDiv.innerHTML = `<span>${file}</span>`;
     fileDivs.push(fileDiv);
   }
