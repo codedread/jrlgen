@@ -18,7 +18,7 @@ function addBookToList(book) {
 /**
  * Assuming all comic books are in the READING_ROOT directory of the web server, create
  * the "database" by:
- *   $ cd ~/reading
+ *   $ cd ~/Documents/data
  *   $ find . | grep "\.cb" | grep -v "BROKEN" | cut -c3- | sort > all-files.txt
  */
 function createAllFilesAsync() {
